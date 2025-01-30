@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="pos_feedback.OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('before-footer')]" position="after">
+
+            <div t-if="props.data.feedback_qr_code">
+                <br /><br />
+                <div class="pos-receipt-order-data mb-2">
+                    Scan me to provide feedback and get a 10% discount on your next purchase.
+                </div>
+                <img id="feedbackqrcode" t-att-src="props.data.feedback_qr_code" class="pos-receipt-qrcode"/>
+            </div>
+
+
+        </xpath>
+    </t>
+</templates>

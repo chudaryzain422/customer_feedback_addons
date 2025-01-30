@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="feedback_form_template" name="Customer Feedback Form">
+        <t t-call="website.layout">
+            <div class="container mt-4">
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Share Your Experience with Us</h3>
+                            </div>
+                            <div class="card-body">
+                                <form action="/feedback/submit" method="post">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    <input type="hidden" name="order_id" t-att-value="order_id"/>
+
+                                    <div class="form-group">
+                                        <label for="name">Name</label>
+                                        <input type="text" class="form-control" name="name" required="required"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="email">Email</label>
+                                        <input type="email" class="form-control" name="email" required="required"
+                                               pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                                               title="Please enter a valid email address (example: user@example.com)" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="phone">Phone</label>
+                                        <input type="tel" class="form-control" name="phone" required="required"
+                                               pattern="^(\+971|05)[0-9]{8}$"
+                                               title="Phone number should start with +971 or 05, followed by 8 digits (e.g., +971562697121 or 0562697121)" />
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary mt-3">Give Feedback to Get Discount</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>
