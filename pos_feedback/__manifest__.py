@@ -25,7 +25,7 @@
         'views/survey_templates.xml',
         'views/survay_form.xml',
         'views/retake_button_template.xml',
-        'views/res_partner.xml',
+        # 'views/res_partner.xml',
     ],
 
     'assets': {
