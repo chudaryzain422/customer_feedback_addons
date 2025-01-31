@@ -1,0 +1,12 @@
+<odoo>
+    <record id="survey_form_inherit" model="ir.ui.view">
+        <field name="name">survey.form.inherit</field>
+        <field name="model">survey.survey</field>
+        <field name="inherit_id" ref="survey.survey_survey_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='user_id']" position="after">
+                <field name="is_feedback_survey"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -23,17 +23,22 @@
                                         <label for="email">Email</label>
                                         <input type="email" class="form-control" name="email" required="required"
                                                pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
-                                               title="Please enter a valid email address (example: user@example.com)" />
+                                               title="Please enter a valid email address (example: user@example.com)"/>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="phone">Phone</label>
+                                        <label for="phone">WhatsApp Number</label>
                                         <input type="tel" class="form-control" name="phone" required="required"
                                                pattern="^(\+971|05)[0-9]{8}$"
-                                               title="Phone number should start with +971 or 05, followed by 8 digits (e.g., +971562697121 or 0562697121)" />
+                                               title="Phone number should start with +971 or 05, followed by 8 digits (e.g., +971562698931 or 0562697362)"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="dob">Date of Birth</label>
+                                        <input type="date" class="form-control" name="dob" required="required"/>
                                     </div>
 
-                                    <button type="submit" class="btn btn-primary mt-3">Give Feedback to Get Discount</button>
+                                    <button type="submit" class="btn btn-primary mt-3">Give Feedback to Get Discount
+                                    </button>
                                 </form>
                             </div>
                         </div>

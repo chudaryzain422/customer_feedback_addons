@@ -2,6 +2,7 @@ from odoo import models, fields, api
 import random
 import string
 
+
 class DiscountVoucher(models.Model):
     _name = 'discount.voucher'
     _description = 'Discount Voucher'
@@ -17,12 +18,12 @@ class DiscountVoucher(models.Model):
         ('used', 'Used'),
         ('expired', 'Expired')
     ], default='draft')
-    
+
     @api.model
     def create(self, vals):
         vals['name'] = self._generate_voucher_code()
         return super(DiscountVoucher, self).create(vals)
-    
+
     def _generate_voucher_code(self):
         chars = string.ascii_uppercase + string.digits
         return ''.join(random.choice(chars) for _ in range(8))

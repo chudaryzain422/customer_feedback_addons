@@ -23,12 +23,16 @@
         # 'security/ir.model.access.csv',
         'data/survey_template.xml',
         'views/survey_templates.xml',
+        'views/survay_form.xml',
+        'views/retake_button_template.xml',
+        'views/res_partner.xml',
     ],
 
     'assets': {
         'point_of_sale._assets_pos': [
             'pos_feedback/static/src/xml/js/pos_order.js',
             'pos_feedback/static/src/xml/custom_order_recipt.xml',
+            'pos_feedback/static/src/xml/PartnerDetails.xml',
         ],
 
     },

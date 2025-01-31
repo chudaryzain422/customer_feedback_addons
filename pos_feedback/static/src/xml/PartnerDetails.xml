@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="PartnerDetailsEditt" t-inherit="point_of_sale.PartnerDetailsEdit" t-inherit-mode="extension">
+        <xpath expr="//div[contains(@class, 'partner-details-box')]" position="inside">
+            <div class="partner-detail col">
+                <label class="form-label label" for="date_of_birth">Date of Birth</label>
+                <input type="date" class="detail form-control" id="date_of_birth" name="date_of_birth"
+                    t-model="changes.date_of_birth"
+                    t-att="{'disabled': isFieldCommercialAndPartnerIsChild('date_of_birth')}"
+                    t-att-class="{'border-danger': missingFields.includes('date_of_birth')}" />
+            </div>
+        </xpath>
+    </t>
+</templates>
