@@ -10,7 +10,7 @@ patch(Order.prototype, {
         debugger;
         return {
             ...super.export_for_printing(...arguments),
-            feedback_qr_code: qrCodeSrc(`${this.pos.base_url}/feedback/form/${this.server_id}`),
+            feedback_qr_code: qrCodeSrc(`${'https://odoo.cintafresh.com'}/feedback/form/${this.server_id}`),
         };
     },
 });
