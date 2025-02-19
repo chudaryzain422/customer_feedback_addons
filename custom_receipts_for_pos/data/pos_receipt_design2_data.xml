@@ -5,13 +5,18 @@
         <field name="name">Design 2</field>
         <field name="design_receipt"><![CDATA[
         <div class="pos-receipt">
-            <div style="font-size:13px; text-align:center;">
+            <t t-if="props.data.headerData.company">
+                <img t-attf-src="/web/image?model=res.company&amp;id={{props.data.headerData.company.id}}&amp;field=logo" alt="Logo" class="pos-receipt-logo"/>
+            </t>
+            <div style="font-size:18px; text-align:center;">
                 <t t-if="props.data.headerData.company.name">
                     <div><t t-esc="props.data.headerData.company.name" /></div>
                 </t>
-                Phone:<t t-esc="props.pos.env.services.pos.company.phone || ''"/><br />
+                Phone:<t t-esc="props.pos.env.services.pos.company.phone || ''"/>
             </div>
-            <br/>
+            <t t-if="props.data.headerData.company.vat">
+                <div style="font-size:13px; text-align:center;">TRN: <t t-esc="props.data.headerData.company.vat" /></div>
+            </t>
             <div style="font-size:13px; text-align:center;">
                 Date :
                 <t t-if="props.receipt.date">
@@ -20,25 +25,39 @@
                 <t t-else="">
                     <t t-esc="props.order.validation_date"/>
                 </t>
-                <br />
             </div>
-            <br />
             <div style="font-size:13px; text-align:center;">
                 Cashier :  <t t-esc='props.receipt.headerData.cashier' /><br />
                 <br />
-                <div class="fw-bolder" t-if="props.data.headerData.trackingNumber">
-                    <span class="fs-2" t-esc="props.data.headerData.trackingNumber" />
+                 <t t-if="props.order.get_partner()">
+                    <div style="font-size:13px; text-align:center;">
+                        Customer: <t t-esc="props.order.get_partner().name" /><br/>
+                        <t t-if="props.order.get_partner().phone">
+                            Phone: <t t-esc="props.order.get_partner().phone" /><br/>
+                        </t>
+                        <t t-if="props.order.get_partner().email">
+                            Email: <t t-esc="props.order.get_partner().email" /><br/>
+                        </t>
+                        <t t-if="props.order.get_partner().street">
+                            Address:
+                            <t t-esc="props.order.get_partner().street" />,
+                            <t t-esc="props.order.get_partner().city" />,
+                            <t t-esc="props.order.get_partner().state_id[1]" />,
+                            <t t-esc="props.order.get_partner().zip" />
+                        </t>
+                    </div>
+                </t>
+                <div class="fw-bolder" t-if="props.order.name">
+                    <span class="fs-2" t-esc="props.order.name" />
                 </div>
             </div>
-            <br/>
             <t t-if="props.receipt.headerData.header">
                 <div style='text-align:center; font-size:13px'>
                     <t t-esc="props.receipt.headerData.header" />
                 </div>
-                <br />
             </t>
             <div>
-                <table class='receipt-orderlines' style="font-size:15px; border-style:double;
+                <table class='receipt-orderlines' style="font-size:13px; border-style:double;
             border-left:none; border-right:none; border-bottom:none; width:100%;">
                 <colgroup>
                     <col width='40%' />
@@ -98,26 +117,22 @@
                     </t>
                 </table>
             </div>
-            <br />
             <div style="padding-top:6px;">
                 <t t-set='taxincluded' t-value='Math.abs(props.receipt.amount_total - props.receipt.total_with_tax) &lt;= 0.000001' />
                 <t t-if='!taxincluded'>
-                    <br/>
                     <div style="font-weight:700; font-size:14px; border-top:1px dashed;"><span style="margin-left:40%;">Subtotal : </span><span t-esc='props.pos.env.utils.formatCurrency(props.data.total_without_tax)' class="pos-receipt-right-align"/></div>
                     <t t-foreach='props.data.tax_details' t-as='tax' t-key="tax.tax.id">
-                        <div style="font-weight:700; font-size:14px;">
+                        <div style="font-weight:700; font-size:13px;">
                             <span style="margin-left:40%;"><t t-esc='tax.name' /></span>
                             <span t-esc='props.pos.env.utils.formatCurrency(tax.amount)' class="pos-receipt-right-align"/>
                         </div>
                     </t>
                 </t>
                 <!-- Total -->
-                <br/>
-                <div style="font-weight:700; font-size:14px;">
+                <div style="font-weight:700; font-size:13px;">
                     <span style="margin-left:40%;">TOTAL : </span>
                     <span t-esc='props.pos.env.utils.formatCurrency(props.data.amount_total)' class="pos-receipt-right-align"/>
                 </div>
-                <br/><br/>
             </div>
             <!-- Payment Lines -->
             <t t-foreach='props.paymentlines' t-as='line' t-key="line_index">
@@ -126,12 +141,10 @@
                     <span t-esc='props.pos.env.utils.formatCurrency(line.amount)' class="pos-receipt-right-align"/>
                 </div>
             </t>
-            <br/>
-            <div class="receipt-change" style="font-size:14px;">
+            <div class="receipt-change" style="font-size:13px;">
             <span style="margin-left:40%;">CHANGE : </span>
                 <span t-esc='props.pos.env.utils.formatCurrency(props.receipt.change)' class="pos-receipt-right-align"/>
             </div>
-            <br/>
             <!-- Extra Payment Info -->
             <t t-if='props.receipt.total_discount'>
                 <div style="font-size:14px; border-top:1px dashed; padding-top:5px;">
@@ -141,17 +154,24 @@
             </t>
             <t t-if='taxincluded'>
                 <t t-foreach='props.receipt.tax_details' t-as='tax' t-key="index_receipt_tax_details">
-                    <div style="font-size:14px;">
+                    <div style="font-size:13px;">
                         <span style="margin-left:40%;"><t t-esc='tax.name' /></span>
                         <span t-esc='props.pos.env.utils.formatCurrency(tax.amount)' class="pos-receipt-right-align"/>
                     </div>
                 </t>
-                <div style="font-size:14px;">
+                <div style="font-size:13px;">
                     <span style="margin-left:40%;">Total Taxes : </span>
                     <span t-esc='props.pos.env.utils.formatCurrency(props.receipt.total_tax)' class="pos-receipt-right-align"/>
                 </div>
             </t>
             <div class='before-footer' />
+            <div t-if="props.data.feedback_qr_code">
+                <br /><br />
+                <div class="pos-receipt-order-data mb-2">
+                    Scan me to provide feedback and get a 10% discount on your next purchase.
+                </div>
+                <img id="feedbackqrcode" t-att-src="props.data.feedback_qr_code" class="pos-receipt-qrcode"/>
+            </div>
             <!-- Footer -->
             <div t-if='props.receipt.footer_html' style="text-align:center; font-size:14px;">
                 <t t-raw='props.receipt.footer_html'/>
@@ -159,21 +179,6 @@
             <div t-if='!props.receipt.footer_html and props.receipt.footer' style="text-align:center; font-size:14px;">
                 <br/>
                 <t t-esc='props.receipt.footer'/>
-                <br/><br/>
-            </div>
-            <div class='after-footer' style="font-size:14px;">
-                <t t-foreach='props.paymentlines' t-as='line' t-key="line_index">
-                    <t t-if='line.ticket'>
-                        <br />
-                        <div class="pos-payment-terminal-receipt">
-                            <t t-raw='line.ticket'/>
-                        </div>
-                    </t>
-                </t>
-            </div>
-            <br/><br/>
-            <div style="font-size:14px; text-align:center;">
-                Thank You... Please Visit Again ...
             </div>
         </div>]]></field>
     </record>
