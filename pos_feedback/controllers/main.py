@@ -42,44 +42,6 @@ class SurveyController(Survey):
             print(f"Created loyalty coupon for partner {partner.name}: {coupon.id}")
         return response, error
 
-    # def send_whatsapp_message(self, partner, coupon):
-    #     # Implement your WhatsApp message-sending logic here.
-    #     try:
-    #         if partner.mobile:
-    #             provider = request.env['provider'].sudo().search(
-    #                 [('state', '=', 'enabled'), ('provider', '=', 'graph_api')], limit=1)
-    #             if provider and provider.graph_api_authenticated:
-    #                 url = provider.graph_api_url + provider.graph_api_instance_id + "/messages"
-    #                 message = f"Hello {partner.name}, thank you for your feedback! We have created a Discount coupon for you. Your coupon code is {coupon.code}."
-    #
-    #                 payload = json.dumps({
-    #                     "messaging_product": "whatsapp",
-    #                     "recipient_type": "individual",
-    #                     "to": partner.mobile,
-    #                     "type": "text",
-    #                     "text": {
-    #                         "body": message
-    #                     }
-    #                 })
-    #
-    #                 headers = {
-    #                     'Content-Type': 'application/json',
-    #                     'Authorization': 'Bearer ' + provider.graph_api_token
-    #                 }
-    #
-    #                 response = requests.post(url, headers=headers, data=payload)
-    #
-    #                 if response.status_code == 200:
-    #                     print(f"Sent WhatsApp message to {partner.mobile}")
-    #                 else:
-    #                     print(f"Failed to send WhatsApp message to {partner.mobile}: {response.text}")
-    #         else:
-    #             print(f"No phone number available for partner {partner.name}. WhatsApp message not sent.")
-    #     except Exception as e:
-    #         # Catch any error that occurs in the process
-    #         print(f"Error sending WhatsApp message to {partner.name} ({partner.id}): {str(e)}")
-
-
 
 
     def send_whatsapp_message(self, partner, coupon):
@@ -93,9 +55,11 @@ class SurveyController(Survey):
                         'partner_id':partner.id,
                         'provider_id':provider.id,
                         'template_id':template.id,
+                        'company_id':provider.company_id.id,
                     })
                     if compose:
-                        compose.send_whatsapp_message()
+                        compose.sudo().onchange_template_id_wrapper()
+                        compose.sudo().send_whatsapp_message()
                         _logger.info(f"Sent WhatsApp message to {partner.mobile} and code is {partner.barcode}")
                     print(f"Sent WhatsApp message to {partner.mobile}")
             else:
