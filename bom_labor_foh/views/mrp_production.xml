@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_mrp_production_form_inherit_labor_foh" model="ir.ui.view">
+        <field name="name">mrp.production.form.inherit.labor.foh</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view" />
+        <field name="arch" type="xml">
+            <!-- Add Labor + FOH Components Tab -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Labor + FOH Components">
+                        <field name="labor_foh_line_ids" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="product_id"/>
+                                <field name="product_qty"/>
+                                <field name="cost" readonly="1"/>
+                            </tree>
+                        </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

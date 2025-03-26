@@ -9,7 +9,7 @@ class MrpBomLaborFoh(models.Model):
         'product.product', 
         string='Product',
         required=True,
-        domain=[('type', '=', 'consu')],  # Only consumable products
+        domain=[('type', '=', 'consu'),('is_labour', '=', True)],  # Only consumable products
     )
     product_qty = fields.Float(
         'Quantity',
@@ -17,8 +17,12 @@ class MrpBomLaborFoh(models.Model):
         required=True,
     )
     cost = fields.Float(
-        related='product_id.standard_price',
         string='Cost',
-        readonly=True,
+        compute='_compute_cost',
         store=True,
     )
+
+    @api.depends('product_id.standard_price', 'product_qty')
+    def _compute_cost(self):
+        for rec in self:
+            rec.cost = rec.product_id.standard_price * rec.product_qty

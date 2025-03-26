@@ -9,10 +9,11 @@
         - Automatically includes these components in Manufacturing Orders
         - Restricts product selection to consumable products only
     """,
-    'depends': ['mrp'],
+    'depends': ['mrp', 'product'],
     'data': [
         'security/ir.model.access.csv',
         'views/mrp_bom_views.xml',
+        'views/mrp_production.xml',
     ],
     'installable': True,
     'application': False,
