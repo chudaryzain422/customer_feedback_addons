@@ -33,7 +33,7 @@
     'company': 'Cybrosys Techno Solutions',
     'maintainer': 'Cybrosys Techno Solutions',
     'website': "https://www.cybrosys.com",
-    'depends': ['account', 'sale', 'account_check_printing',
+    'depends': ['base','account', 'sale', 'account_check_printing',
                 'base_account_budget', 'analytic'],
     'data': [
         'security/security.xml',
