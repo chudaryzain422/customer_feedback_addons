@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="group_refund" model="res.groups">
+        <field name="name">Manage refund orders</field>
+        <field name="comment">The user will be able to process refunds.</field>
+    </record>
+
+</odoo>
